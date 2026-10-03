@@ -1,0 +1,64 @@
+{% extends 'faculty/base.html' %}
+
+{% block title %}Головна | {{ info.faculty_name|default:"ФПРН НаУКМА" }}{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-5 bg-white rounded-3 shadow-sm border">
+    <div class="container-fluid py-2">
+        <h1 class="display-5 fw-bold text-dark mb-3">
+            {{ info.faculty_name|default:"Факультет природничих наук НаУКМА" }}
+        </h1>
+        <p class="fs-5 text-secondary lead">
+            {{ info.description|linebreaks }}
+        </p>
+        <div class="d-flex gap-3 mt-4">
+            <a href="{% url 'faculty:programs' %}" class="btn btn-naukma px-4 py-2">Спеціальності факультету →</a>
+            <a href="{% url 'faculty:departments' %}" class="btn btn-outline-secondary px-4 py-2">Кафедри</a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0 p-4">
+            <h3 class="h4 fw-bold mb-3 text-dark border-bottom pb-2">Контактна інформація</h3>
+            <ul class="list-unstyled text-secondary mb-0">
+                <li class="mb-3">
+                    <strong>📍 Адреса деканату:</strong><br>
+                    {{ info.address|default:"вул. Григорія Сковороди, 2, корпус 3, кімн. 216" }}
+                </li>
+                <li class="mb-3">
+                    <strong>📞 Телефон:</strong><br>
+                    {{ info.phone|default:"+38 (044) 425-60-57" }}
+                </li>
+                <li class="mb-3">
+                    <strong>✉️ Електронна пошта:</strong><br>
+                    <a href="mailto:{{ info.email }}" class="text-decoration-none">{{ info.email|default:"fprn@ukma.edu.ua" }}</a>
+                </li>
+                <li>
+                    <strong>🕒 Години прийому:</strong><br>
+                    {{ info.working_hours|default:"Пн–Пт: 09:00 – 17:00" }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0 p-4 bg-white">
+            <h3 class="h4 fw-bold mb-3 text-dark border-bottom pb-2">Наука та дослідження</h3>
+            <p class="text-secondary">
+                ФПРН поєднує фундаментальну університетську освіту з активною лабораторною практикою:
+            </p>
+            <ul class="text-secondary mb-4">
+                <li>Лабораторії молекулярно-генетичного та біохімічного аналізу.</li>
+                <li>Спільні дослідження з інститутами НАН України.</li>
+                <li>Польові екологічні дослідження та ГІС-моделювання.</li>
+                <li>Міжнародні наукові стажування та програми академічної мобільності.</li>
+            </ul>
+            <div class="mt-auto">
+                <span class="badge bg-light text-dark border p-2">Наукова школа Києво-Могилянської академії</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -32,7 +32,7 @@ class MainPageInfo(models.Model):
         default="Пн–Пт: 09:00 – 17:00"
     )
 
-class Cathedra(models.Model):
+class Department(models.Model):
     name = models.CharField(
         "Назва кафедри",
         max_length=255
@@ -44,8 +44,7 @@ class Cathedra(models.Model):
 
 class Program(models.Model):
     code = models.IntegerField(
-        "Код спеціальності",
-        max_length=20
+        "Код спеціальності"
     )
     name = models.CharField(
         "Назва спеціальності",
@@ -62,11 +61,12 @@ class Program(models.Model):
         "Контакт координатору набору",
         max_length=255
     )
-    graduation_cathedra = models.ForeignKey(
-        Cathedra,
-        on_delete=models.CASCADE
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        related_name="programs"
     )
-    discipline_list = models.JSONField(
+    disciplines = models.JSONField(
         "Список дисциплін",
         default=list
     )
@@ -76,7 +76,7 @@ class Lecturer(models.Model):
         "Ім'я викладача",
         max_length=255
     )
-    role = models.CharField(
+    position = models.CharField(
         "Посада",
         max_length=255
     )
@@ -84,7 +84,8 @@ class Lecturer(models.Model):
         "Вчене звання",
         max_length=255
     )
-    cathedra = models.ForeignKey(
-        Cathedra,
-        on_delete=models.CASCADE
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        related_name="lecturers"
     )

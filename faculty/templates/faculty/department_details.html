@@ -1,0 +1,68 @@
+{% extends 'faculty/base.html' %}
+
+{% block title %}{{ department.name }} | ФПРН НаУКМА{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'faculty:home' %}">Головна</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'faculty:departments' %}">Кафедри</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ department.name }}</li>
+    </ol>
+</nav>
+
+<div class="bg-white p-4 p-md-5 rounded-3 shadow-sm border mb-4">
+    <h1 class="fw-bold mb-3">{{ department.name }}</h1>
+    <p class="fs-5 text-secondary mb-4">
+        <strong>Завідувач кафедри:</strong> {{ department.head_name }}
+    </p>
+
+    <h5 class="fw-bold mb-3 text-dark">Випускові спеціальності кафедри:</h5>
+    <div class="d-flex flex-wrap gap-2">
+        {% for prog in programs %}
+        <a href="{% url 'faculty:program_details' prog.id %}" class="btn btn-light border btn-sm">
+            🎓 {{ prog.code }} {{ prog.name }}
+        </a>
+        {% empty %}
+        <span class="text-muted small">Немає закріплених спеціальностей.</span>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 p-4 p-md-5">
+    <h3 class="h4 fw-bold mb-4 text-dark border-bottom pb-2">Викладацький склад кафедри</h3>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col" style="width: 5%;">#</th>
+                    <th scope="col" style="width: 35%;">Прізвище, ім'я та по батькові</th>
+                    <th scope="col" style="width: 25%;">Посада</th>
+                    <th scope="col" style="width: 35%;">Науковий ступінь / Вчене звання</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lecturer in lecturers %}
+                <tr>
+                    <th scope="row" class="text-muted">{{ forloop.counter }}</th>
+                    <td class="fw-bold text-dark">{{ lecturer.name }}</td>
+                    <td><span class="badge bg-secondary">{{ lecturer.position }}</span></td>
+                    <td class="text-secondary">{{ lecturer.degree }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">Інформація про викладачів кафедри наразі відсутня.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'faculty:departments' %}" class="btn btn-outline-secondary">
+            ← Повернутися до списку кафедр
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Факультет природничих наук | НаУКМА{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Project Stylesheet -->
+    <link rel="stylesheet" href="{% static 'faculty/css/style.css' %}">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Хедер зі швидким доступом до вкладок: Головна (/), Кафедри (/departments/), Спеціальності (/programs/) -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-naukma shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'faculty:home' %}">
+                <span class="text-gold">ФПРН</span> НаУКМА
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active text-gold{% endif %}" href="{% url 'faculty:home' %}">
+                            Головна
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'department' in request.resolver_match.url_name %}active text-gold{% endif %}" href="{% url 'faculty:departments' %}">
+                            Кафедри
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'program' in request.resolver_match.url_name %}active text-gold{% endif %}" href="{% url 'faculty:programs' %}">
+                            Спеціальності
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основний контент сторінки -->
+    <main class="container my-5 flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer-naukma py-4 text-center text-muted mt-auto">
+        <div class="container">
+            <small>© 2026 Факультет природничих наук Національного університету «Києво-Могилянська академія»</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
